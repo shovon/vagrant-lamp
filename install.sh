@@ -17,7 +17,7 @@ restart mysql
 
 echo "create database development;" | mysql -uroot -proot
 
-cat /vagrant/configs/my.cnf > /etc/mysql/my.cnf
+cat /vagrant/my.cnf > /etc/mysql/my.cnf
 
 restart mysql
 
@@ -26,9 +26,13 @@ restart mysql
 apt-get install php5 libapache2-mod-php5 php5-mcrypt -y
 cat /vagrant/dir.conf > /etc/apache2/mods-enabled/dir.conf
 
-apt-get install -y php5-curl php5-dbg php5-dev php5-gmp php5-json php5-odbc php5-imagick php5-intl php5-mcrypt php5-xdebug
+apt-get install -y php5-mysql php5-curl php5-dbg php5-dev php5-gmp php5-json php5-odbc php5-imagick php5-intl php5-mcrypt php5-xdebug
 
 # Share the `public` folder with the virtual machine instance.
 
 rm -r /var/www/html
 ln -s /vagrant/public /var/www/html
+
+# Restart Apache for good measures
+
+/etc/init.d/apache2 restart
